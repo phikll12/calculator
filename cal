@@ -85,10 +85,10 @@
     <!-- ******************************************************************************** -->
     <wsdl:service name="CalculatorService">
         <wsdl:port name="AddCalculatorPort" binding="tns:AddSoapBinding">
-            <soap:address location="http://localhost:3000/Add"/>
+            <soap:address location="http://www.glory.co.jp/Add"/>
         </wsdl:port>
          <wsdl:port name="SubCalculatorPort" binding="tns:SubSoapBinding">
-            <soap:address location="http://localhost:3000/Sub"/>
+            <soap:address location="http://www.glory.co.jp/Sub"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
