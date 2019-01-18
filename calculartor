@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="Calculator" targetNamespace="http://www.glory.co.jp/bruebox.wsdl"
+                  xmlns:tns="http://www.glory.co.jp/bruebox.wsdl"
+                  xmlns:xsd1="http://www.glory.co.jp/bruebox.xsd"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.glory.co.jp/bruebox.xsd"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <!--Request & Response type-->
+            <xsd:element name="ResetRequest" type="xsd1:ResetRequestType"/>
+            <xsd:element name="ResetResponse" type="xsd1:ResetResponseType"/>
+            <!-- ************************************************** -->
+            <!--User define of ComplexType-->
+            <!--Reset Request-->
+            <xsd:complexType name="ResetRequestType">
+                <xsd:sequence>
+                    <xsd:element ref="xsd1:Num1" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element ref="xsd1:Num2" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!--ResetResponse-->
+            <xsd:complexType name="ResetResponseType">
+                <xsd:sequence>
+                    <xsd:element ref="xsd1:data" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element ref="xsd1:statusCode" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element ref="xsd1:message" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- ***********************-->
+            <xsd:element name="Num1"          type="xsd:string"/>
+            <xsd:element name="Num2"       type="xsd:string"/>
+            <!-- ************************************************** -->
+            <xsd:element name="data"          type="xsd:integer"/>
+            <xsd:element name="statusCode"       type="xsd:integer"/>
+            <xsd:element name="message"   type="xsd:string"/>
+
+        </xsd:schema>
+    </wsdl:types>
+    <!-- ******************************************************************************** -->
+    <wsdl:message name="ResetRequestMsg">
+        <wsdl:part name="body" element="xsd1:ResetRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ResetResponseMsg">
+        <wsdl:part name="body" element="xsd1:ResetResponse"/>
+    </wsdl:message>
+    <!-- ******************************************************************************** -->
+    <wsdl:portType name ="CalculatorPortType">
+        <wsdl:operation name ="AddOperation">
+            <wsdl:input message="tns:ResetRequestMsg" name="ResetOperationRequest"/>
+            <wsdl:output message="tns:ResetResponseMsg" name="ResetOperationResponse"/>
+        </wsdl:operation>
+         <wsdl:operation name ="SubOperation">
+            <wsdl:input message="tns:ResetRequestMsg" name="ResetOperationRequest"/>
+            <wsdl:output message="tns:ResetResponseMsg" name="ResetOperationResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <!-- ******************************************************************************** -->
+    <wsdl:binding name="CalculatorBinding" type="tns:CalculatorPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="AddOperation">
+            <soap:operation soapAction="AddOperation"/>
+            <wsdl:input name="ResetOperationRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResetOperationResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+         <wsdl:operation name="SubOperation">
+            <soap:operation soapAction="SubOperation"/>
+            <wsdl:input name="ResetOperationRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResetOperationResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+         </wsdl:operation>
+    </wsdl:binding>
+   
+    <!-- ******************************************************************************** -->
+    <wsdl:service name="CalculatorService">
+        <wsdl:port name="CalculatorPort" binding="tns:CalculatorBinding">
+            <soap:address location="http://localhost:3000/wsdl/calculator?wsdl"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
